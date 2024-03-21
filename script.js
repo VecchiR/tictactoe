@@ -1,52 +1,87 @@
-const gameboard = ( function () {
-    let board = [['','',''],['','',''],['','','']];
+const gameboard = (function () {
+    let board = [['', '', ''], ['', '', ''], ['', '', '']];
     const getBoard = () => {
         return board;
     }
+    const writeOnBoard = (x, y) => {
+        if (board[x][y] === '') {
+            board[x][y] = gameflow.getActivePlayer().getMarker();
+            console.log(getBoard());
+            return true;
+        }
 
-    const writeOnBoard = (x,y) => {
-        board[x][y] = gameflow.activePlayer().getMarker();
-        console.log(getBoard());
+        else {
+            console.log('Space already taken! Choose another one');
+            return false;
+        }
+
     }
-
-    return {getBoard, writeOnBoard};
-
+    return { getBoard, writeOnBoard };
 })();
-    
 
-function createPlayer (name, marker) {
-    const getMarker = () => {
-        return marker;
-    }
-    return {name, getMarker};
-}
-
-const gameflow = ( function () {
-
+const gameflow = (function () {
     let playerTurn = 1;
-
-    const activePlayer = () => {
+    const getActivePlayer = () => {
         if (playerTurn === 1) {
-            playerTurn = 2;
             return player1;
         }
         else {
-            playerTurn = 1;
             return player2;
         }
     }
+    const changeActivePlayer = () => {
+        if (playerTurn === 1) {
+            return playerTurn = 2;
+        }
+        else {
+            return playerTurn = 1;
+        }
+    }
+    const selectSpace = (x, y) => {
+        if (gameboard.writeOnBoard(x, y)) {
+            changeActivePlayer();
+        }
+    }
+    const checkGameOver = () => {
 
-    const selectSpace = (x,y) => {
-        return gameboard.writeOnBoard(x,y);
+        function goCheck(arr) {
+            for (let i = 0; i < 3; i++) {
+                if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
+                    return true;
+                }
+            }
+        }
+
+        let board = gameboard.getBoard();
+        let row = col = diag = ['', '', ''];
+        let checkArr;
+
+        for (let x = 0; x < 3; x++) {
+            col = [board[0][x], board[1][x], board[2][x]];
+            for (let y = 0; y < 3; y++) {
+                row[y] = board[x][y];
+            }
+            checkArr = [row, col, diag];
+            if (goCheck(checkArr)) {
+                return "over";
+            }
+        }
     }
 
-    return {selectSpace, activePlayer};
+    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver };
 
 })();
 
+function createPlayer(name, marker) {
+    const getMarker = () => {
+        return marker;
+    }
+    return { name, getMarker };
+}
 
 const player1 = createPlayer('Jimothy', 'x');
 const player2 = createPlayer('Aroldo', 'o');
 
 console.log(gameboard.getBoard());
 console.log([player1.name, player1.getMarker()], [player2.name, player2.getMarker()]);
+console.log(`It is ${gameflow.getActivePlayer().name}'s turn!`);
