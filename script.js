@@ -1,5 +1,5 @@
 const gameboard = (function () {
-    let board = [['', '', ''], ['', '', ''], ['', '', '']];
+    let board = [['', 'x', 'x'], ['', '', ''], ['', '', '']];
     const getBoard = () => {
         return board;
     }
@@ -38,7 +38,13 @@ const gameflow = (function () {
     }
     const selectSpace = (x, y) => {
         if (gameboard.writeOnBoard(x, y)) {
-            changeActivePlayer();
+            let gameOverMsg = checkGameOver();
+            if (gameOverMsg) {
+                return gameOverMsg;
+            }
+            else {
+                changeActivePlayer();
+            }
         }
     }
     const checkGameOver = () => {
@@ -69,6 +75,8 @@ const gameflow = (function () {
                 return `Game Over! ${getActivePlayer().name} wins!`;
             }
         }
+
+
     }
 
     return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver };
