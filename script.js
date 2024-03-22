@@ -48,20 +48,20 @@ const gameflow = (function () {
         }
     }
     const checkGameOver = () => {
-
-        function goCheck(arr) {
-            for (let i = 0; i < 3; i++) {
-                if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
-                    return true;
+        function goCheck(arr, x) {
+                for (let i = 0; i < 3; i++) {
+                    if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
+                        return true;
+                    }
+                    else if (arr[i].every((val) => val != '')) {
+                        checkFull[x] = true;
+                    }
                 }
-            }
         }
-
         let board = gameboard.getBoard();
         let row = col = diag = ['', '', ''];
         let checkArr;
-
-
+        let checkFull;
         for (let x = 0; x < 3; x++) {
             if (x < 2) {
                 diag = [board[2 * x][0], board[1][1], board[2 - (2 * x)][2]];
@@ -71,12 +71,10 @@ const gameflow = (function () {
                 row[y] = board[x][y];
             }
             checkArr = [row, col, diag];
-            if (goCheck(checkArr)) {
+            if (goCheck(checkArr, x)) {
                 return `Game Over! ${getActivePlayer().name} wins!`;
             }
         }
-
-
     }
 
     return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver };
