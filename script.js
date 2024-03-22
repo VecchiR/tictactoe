@@ -14,7 +14,6 @@ const gameboard = (function () {
             console.log('Space already taken! Choose another one');
             return false;
         }
-
     }
     return { getBoard, writeOnBoard };
 })();
@@ -56,14 +55,18 @@ const gameflow = (function () {
         let row = col = diag = ['', '', ''];
         let checkArr;
 
+
         for (let x = 0; x < 3; x++) {
+            if (x < 2) {
+                diag = [board[2 * x][0], board[1][1], board[2 - (2 * x)][2]];
+            }
             col = [board[0][x], board[1][x], board[2][x]];
             for (let y = 0; y < 3; y++) {
                 row[y] = board[x][y];
             }
             checkArr = [row, col, diag];
             if (goCheck(checkArr)) {
-                return "over";
+                return `Game Over! ${getActivePlayer().name} wins!`;
             }
         }
     }
