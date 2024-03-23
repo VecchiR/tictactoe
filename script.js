@@ -1,5 +1,5 @@
 const gameboard = (function () {
-    let board = [['', 'x', 'x'], ['', '', ''], ['', '', '']];
+    let board = [['', 'o', 'x'], ['o', 'x', 'o'], ['o', 'x', 'o']];
     const getBoard = () => {
         return board;
     }
@@ -48,20 +48,23 @@ const gameflow = (function () {
         }
     }
     const checkGameOver = () => {
+
+        let board = gameboard.getBoard();
+        let row = col = diag = ['', '', ''];
+        let checkArr;
+        let checkFull = ['','',''];
+
         function goCheck(arr, x) {
                 for (let i = 0; i < 3; i++) {
                     if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
                         return true;
                     }
                     else if (arr[i].every((val) => val != '')) {
-                        checkFull[x] = true;
+                        checkFull[x] = 'full';
                     }
                 }
         }
-        let board = gameboard.getBoard();
-        let row = col = diag = ['', '', ''];
-        let checkArr;
-        let checkFull;
+        
         for (let x = 0; x < 3; x++) {
             if (x < 2) {
                 diag = [board[2 * x][0], board[1][1], board[2 - (2 * x)][2]];
@@ -73,6 +76,9 @@ const gameflow = (function () {
             checkArr = [row, col, diag];
             if (goCheck(checkArr, x)) {
                 return `Game Over! ${getActivePlayer().name} wins!`;
+            }
+            if (checkFull.every((val) => val === 'full')) {
+                return "Game Over! It's a tie!";
             }
         }
     }
