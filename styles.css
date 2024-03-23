@@ -1,0 +1,8 @@
+.board {
+    display: grid;
+    grid-template: 100px 100px 100px / 100px 100px 100px;
+}
+
+.space {
+    border: 2px solid black;
+}
