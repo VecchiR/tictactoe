@@ -1,5 +1,5 @@
 const gameboard = (function () {
-    let board = [['', 'o', 'x'], ['o', 'x', 'o'], ['o', 'x', 'o']];
+    let board = [['', '', ''], ['', '', ''], ['', '', '']];
     const getBoard = () => {
         return board;
     }
@@ -90,6 +90,13 @@ const gameflow = (function () {
 
 const displayController = (function () {
     const displayBoard = document.querySelectorAll('.space');
+    
+    const addClickEventListener = (function () {
+        displayBoard.forEach((space) => space.addEventListener('click', function () {
+            gameflow.selectSpace(space.getAttribute('spcx'), space.getAttribute('spcy'));
+        }));
+    })();
+
     
     const updDisplayBoard = () => {
         displayBoard.forEach(space => {
