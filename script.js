@@ -38,6 +38,7 @@ const gameflow = (function () {
     }
     const selectSpace = (x, y) => {
         if (gameboard.writeOnBoard(x, y)) {
+            displayController.updDisplayBoard();
             let gameOverMsg = checkGameOver();
             if (gameOverMsg) {
                 return gameOverMsg;
@@ -88,8 +89,15 @@ const gameflow = (function () {
 })();
 
 const displayController = (function () {
+    const displayBoard = document.querySelectorAll('.space');
+    
+    const updDisplayBoard = () => {
+        displayBoard.forEach(space => {
+            space.textContent = gameboard.getBoard()[space.getAttribute('spcx')][space.getAttribute('spcy')];
+        });
+    }
 
-    return {};
+    return {updDisplayBoard};
 })();
 
 function createPlayer(name, marker) {
@@ -102,6 +110,8 @@ function createPlayer(name, marker) {
 const player1 = createPlayer('Jimothy', 'x');
 const player2 = createPlayer('Aroldo', 'o');
 
+
+displayController.updDisplayBoard();
 console.log(gameboard.getBoard());
 console.log([player1.name, player1.getMarker()], [player2.name, player2.getMarker()]);
 console.log(`It is ${gameflow.getActivePlayer().name}'s turn!`);
