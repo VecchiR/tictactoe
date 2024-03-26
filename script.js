@@ -54,19 +54,22 @@ const gameflow = (function () {
         let board = gameboard.getBoard();
         let row = col = diag = ['', '', ''];
         let checkArr;
-        let checkFull = ['','',''];
+        let checkFull = ['', '', ''];
 
         function goCheck(arr, x) {
-                for (let i = 0; i < 3; i++) {
-                    if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
-                        return true;
-                    }
-                    else if (arr[i].every((val) => val != '')) {
-                        checkFull[x] = 'full';
-                    }
+            for (let i = 0; i < 3; i++) {
+                if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
+                    return true;
                 }
+                else if (arr[i].every((val) => val != '')) {
+                    checkFull[x] = 'full';
+                }
+                else {
+                    checkFull[x] = '';
+                }
+            }
         }
-        
+
         for (let x = 0; x < 3; x++) {
             if (x < 2) {
                 diag = [board[2 * x][0], board[1][1], board[2 - (2 * x)][2]];
@@ -86,26 +89,25 @@ const gameflow = (function () {
     }
 
     return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver };
-
 })();
 
 const displayController = (function () {
     const displayBoard = document.querySelectorAll('.space');
-    
+
     const addClickEventListener = (function () {
         displayBoard.forEach((space) => space.addEventListener('click', function () {
             gameflow.selectSpace(space.getAttribute('spcx'), space.getAttribute('spcy'));
         }));
     })();
 
-    
+
     const updDisplayBoard = () => {
         displayBoard.forEach(space => {
             space.textContent = gameboard.getBoard()[space.getAttribute('spcx')][space.getAttribute('spcy')];
         });
     }
 
-    return {updDisplayBoard};
+    return { updDisplayBoard };
 })();
 
 function createPlayer(name, marker) {
