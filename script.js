@@ -20,6 +20,7 @@ const gameboard = (function () {
 
 const gameflow = (function () {
     let playerTurn = 1;
+    let gameOverMsg;
     const getActivePlayer = () => {
         if (playerTurn === 1) {
             return player1;
@@ -39,9 +40,9 @@ const gameflow = (function () {
     const selectSpace = (x, y) => {
         if (gameboard.writeOnBoard(x, y)) {
             displayController.updDisplayBoard();
-            let gameOverMsg = checkGameOver();
+            checkGameOver();
             if (gameOverMsg) {
-                return gameOverMsg;
+                console.log(gameOverMsg);
             }
             else {
                 changeActivePlayer();
@@ -76,10 +77,10 @@ const gameflow = (function () {
             }
             checkArr = [row, col, diag];
             if (goCheck(checkArr, x)) {
-                return `Game Over! ${getActivePlayer().name} wins!`;
+                gameOverMsg = `Game Over! ${getActivePlayer().name} wins!`;
             }
-            if (checkFull.every((val) => val === 'full')) {
-                return "Game Over! It's a tie!";
+            else if (checkFull.every((val) => val === 'full')) {
+                gameOverMsg = "Game Over! It's a tie!";
             }
         }
     }
