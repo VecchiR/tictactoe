@@ -100,8 +100,11 @@ const displayController = (function () {
 
 
     const removeStartScreen = () => {
-        if (playerXName.value && playerOName.value)
-        document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
+        if (playerXName.value && playerOName.value) {
+            document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
+            return true;
+        }
+        return false;
     }
 
     const createBoard = () => {
@@ -131,7 +134,11 @@ const displayController = (function () {
     }
 
     const startButton = document.querySelector('.start');
-    startButton.addEventListener('click', removeStartScreen);
+    startButton.addEventListener('click', () => {
+        if(removeStartScreen()){
+            createBoard();
+        }
+    });
 
     return { updDisplayBoard, createBoard, removeStartScreen };
 })();
