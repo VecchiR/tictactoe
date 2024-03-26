@@ -123,7 +123,7 @@ const displayController = (function () {
                 board.appendChild(space);
             }
         }
-        document.querySelector('body').appendChild(board); // trocar para WHATEVER DISPLAY DIV QUE TEM OS INPUT DE NAME E BOTAO DE START
+        document.querySelector('.main-container').appendChild(board);
         displayBoard = document.querySelectorAll('.space');
     }
 
@@ -154,7 +154,3 @@ const player1 = createPlayer('Jimothy', 'x');
 const player2 = createPlayer('Aroldo', 'o');
 
 
-//displayController.updDisplayBoard();
-console.log(gameboard.getBoard());
-console.log([player1.name, player1.getMarker()], [player2.name, player2.getMarker()]);
-console.log(`It is ${gameflow.getActivePlayer().name}'s turn!`);
