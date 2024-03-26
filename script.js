@@ -92,14 +92,28 @@ const gameflow = (function () {
 })();
 
 const displayController = (function () {
-    const displayBoard = document.querySelectorAll('.space');
 
-    const addClickEventListener = (function () {
-        displayBoard.forEach((space) => space.addEventListener('click', function () {
-            gameflow.selectSpace(space.getAttribute('spcx'), space.getAttribute('spcy'));
-        }));
-    })();
+    let displayBoard;
 
+    const createBoard = () => {
+        const board = document.createElement('div');
+        board.setAttribute('class', 'board');
+        console.log(board);
+        for (let x = 0; x < 3; x++) {
+            for (let y = 0; y < 3; y++) {
+                let space = document.createElement('div');
+                space.setAttribute('class', 'space');
+                space.setAttribute('spcx', x);
+                space.setAttribute('spcy', y);
+                space.addEventListener('click', function () {
+                    gameflow.selectSpace(space.getAttribute('spcx'), space.getAttribute('spcy'));
+                });
+                board.appendChild(space);
+            }
+        }
+        document.querySelector('body').appendChild(board); // trocar para WHATEVER DISPLAY DIV QUE TEM OS INPUT DE NAME E BOTAO DE START
+        displayBoard = document.querySelectorAll('.space');
+    }
 
     const updDisplayBoard = () => {
         displayBoard.forEach(space => {
@@ -107,7 +121,7 @@ const displayController = (function () {
         });
     }
 
-    return { updDisplayBoard };
+    return { updDisplayBoard, createBoard };
 })();
 
 function createPlayer(name, marker) {
@@ -121,7 +135,7 @@ const player1 = createPlayer('Jimothy', 'x');
 const player2 = createPlayer('Aroldo', 'o');
 
 
-displayController.updDisplayBoard();
+//displayController.updDisplayBoard();
 console.log(gameboard.getBoard());
 console.log([player1.name, player1.getMarker()], [player2.name, player2.getMarker()]);
 console.log(`It is ${gameflow.getActivePlayer().name}'s turn!`);
