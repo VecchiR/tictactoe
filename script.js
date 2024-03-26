@@ -95,6 +95,11 @@ const displayController = (function () {
 
     let displayBoard;
 
+
+    const removeStartScreen = () => {
+        document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
+    }
+
     const createBoard = () => {
         const board = document.createElement('div');
         board.setAttribute('class', 'board');
@@ -121,7 +126,10 @@ const displayController = (function () {
         });
     }
 
-    return { updDisplayBoard, createBoard };
+    const startButton = document.querySelector('.start');
+    startButton.addEventListener('click', removeStartScreen);
+
+    return { updDisplayBoard, createBoard, removeStartScreen };
 })();
 
 function createPlayer(name, marker) {
