@@ -100,6 +100,8 @@ const gameflow = (function () {
 const displayController = (function () {
 
     let displayBoard;
+    let msgDisplay;
+    let resetButton;
 
     const playerXName = document.querySelector('#playerx');
     const playerOName = document.querySelector('#playero');
@@ -115,6 +117,12 @@ const displayController = (function () {
     }
 
     const createBoard = () => {
+        msgDisplay = document.createElement('span');
+        msgDisplay.setAttribute('class', 'messages');
+        resetButton = document.createElement('button');
+        resetButton.setAttribute('class', 'reset');
+        resetButton.innerHTML = 'Reset';
+ //-----------       //resetButton.addEventListener('click', );   -------------         FALTA A FUNÇÃO "O QUE ACONTECE AO CLICAR EM RESET"
         const board = document.createElement('div');
         board.setAttribute('class', 'board');
         console.log(board);
@@ -130,7 +138,9 @@ const displayController = (function () {
                 board.appendChild(space);
             }
         }
+        document.querySelector('.main-container').appendChild(msgDisplay);
         document.querySelector('.main-container').appendChild(board);
+        document.querySelector('.main-container').appendChild(resetButton);
         displayBoard = document.querySelectorAll('.space');
     }
 
