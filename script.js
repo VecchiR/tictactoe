@@ -95,8 +95,12 @@ const displayController = (function () {
 
     let displayBoard;
 
+    const playerXName = document.querySelector('#playerx');
+    const playerOName = document.querySelector('#playero');
+
 
     const removeStartScreen = () => {
+        if (playerXName.value && playerOName.value)
         document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
     }
 
