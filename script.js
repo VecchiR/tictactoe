@@ -19,8 +19,14 @@ const gameboard = (function () {
 })();
 
 const gameflow = (function () {
+    let player1;
+    let player2;
     let playerTurn = 1;
     let gameOverMsg;
+    const setPlayersNames = (xname, oname) => {
+        player1 = createPlayer(xname, 'x');
+        player2 = createPlayer(oname, 'o');
+    }
     const getActivePlayer = () => {
         if (playerTurn === 1) {
             return player1;
@@ -88,7 +94,7 @@ const gameflow = (function () {
         }
     }
 
-    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver };
+    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver, setPlayersNames };
 })();
 
 const displayController = (function () {
@@ -101,6 +107,7 @@ const displayController = (function () {
 
     const removeStartScreen = () => {
         if (playerXName.value && playerOName.value) {
+            gameflow.setPlayersNames(playerXName.value, playerOName.value);
             document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
             return true;
         }
@@ -143,14 +150,13 @@ const displayController = (function () {
     return { updDisplayBoard, createBoard, removeStartScreen };
 })();
 
+
+
 function createPlayer(name, marker) {
     const getMarker = () => {
         return marker;
     }
     return { name, getMarker };
 }
-
-const player1 = createPlayer('Jimothy', 'x');
-const player2 = createPlayer('Aroldo', 'o');
 
 
