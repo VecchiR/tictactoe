@@ -1,5 +1,10 @@
 const gameboard = (function () {
     let board = [['', '', ''], ['', '', ''], ['', '', '']];
+
+    const resetBoard = () => {
+        board = [['', '', ''], ['', '', ''], ['', '', '']];
+    }
+
     const getBoard = () => {
         return board;
     }
@@ -14,7 +19,7 @@ const gameboard = (function () {
             return false;
         }
     }
-    return { getBoard, writeOnBoard };
+    return { getBoard, writeOnBoard, resetBoard };
 })();
 
 const gameflow = (function () {
@@ -61,6 +66,7 @@ const gameflow = (function () {
         let row = col = diag = ['', '', ''];
         let checkArr;
         let checkFull = ['', '', ''];
+        gameOverMsg = false;
 
         function goCheck(arr, x) {
             for (let i = 0; i < 3; i++) {
@@ -86,10 +92,10 @@ const gameflow = (function () {
             }
             checkArr = [row, col, diag];
             if (goCheck(checkArr, x)) {
-                gameOverMsg = `Game Over! ${getActivePlayer().name} wins!`;
+                return gameOverMsg = `Game Over! ${getActivePlayer().name} wins!`;
             }
             else if (checkFull.every((val) => val === 'full')) {
-                gameOverMsg = "Game Over! It's a tie!";
+                return gameOverMsg = "Game Over! It's a tie!";
             }
         }
     }
@@ -120,9 +126,9 @@ const displayController = (function () {
     }
 
     const resetScreen = () => {
+        gameboard.resetBoard();
         mainContainer.removeChild(gameContainer);
         mainContainer.appendChild(startContainer);
-        document
     }
 
     const createBoard = () => {

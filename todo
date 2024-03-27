@@ -1,3 +1,11 @@
 depois que reseta, tem que limpar os valores do board
 
 o 'tabuleiro visual' fica limpo, mas quando tenta clicar, acusa "space is already taken"
+
+
+-definir starting player?
+
+maybe:
+  -nome default- player1 e player2
+  -error "label" p/ se a pessoaclicar start sem colocar os nomes dos players
+  -+verificação se os nomes não são iguais (altera textContent do erro)
