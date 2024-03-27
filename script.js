@@ -30,7 +30,7 @@ const gameflow = (function () {
     const setPlayers = (xname, oname) => {
         player1 = createPlayer(xname, 'x');
         player2 = createPlayer(oname, 'o');
-        playerTurn = Math.floor(Math.random() * 2)+1;
+        playerTurn = Math.floor(Math.random() * 2) + 1;
     }
     const getActivePlayer = () => {
         if (playerTurn === 1) {
@@ -118,12 +118,11 @@ const displayController = (function () {
     const mainContainer = document.querySelector('.main-container');
 
     const removeStartScreen = () => {
-        if (playerXName.value && playerOName.value) {
-            gameflow.setPlayers(playerXName.value, playerOName.value);
-            mainContainer.removeChild(startContainer);
-            return true;
-        }
-        return false;
+        gameflow.setPlayers(
+            playerXName.value ? playerXName.value : playerXName.placeholder,
+            playerOName.value ? playerOName.value : playerOName.placeholder);
+        mainContainer.removeChild(startContainer);
+        return true;
     }
 
     const resetScreen = () => {
