@@ -28,8 +28,8 @@ const gameflow = (function () {
     let playerTurn;
     let gameOverMsg;
     const setPlayers = (xname, oname) => {
-        player1 = createPlayer(xname, 'x');
-        player2 = createPlayer(oname, 'o');
+        player1 = createPlayer(xname, 'X');
+        player2 = createPlayer(oname, 'O');
         playerTurn = Math.floor(Math.random() * 2) + 1;
     }
     const getActivePlayer = () => {

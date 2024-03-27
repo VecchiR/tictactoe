@@ -1,8 +1,67 @@
-.board {
-    display: grid;
-    grid-template: 100px 100px 100px / 100px 100px 100px;
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
 }
 
-.space {
-    border: 2px solid black;
+
+body {
+    height: 100vh;
+    display: grid;
 }
+
+.main-container {
+    display: grid;
+    place-content: center;
+}
+
+    .start-container {
+        display: grid;
+        justify-items: center;
+        gap: 5vh;
+    }
+
+    .start-container label *{
+        font-size: 28px;
+    }
+
+    .game-container {
+        display: grid;
+        justify-items: center;
+        gap: 5vh;
+    }
+
+        .messages {
+            font-size: 34px;
+            text-align: center;
+        }
+
+        .board {
+            display: grid;
+            grid-template: repeat(3, 150px) / 
+                           repeat(3, 150px);
+            /* grid-template: repeat(3, minmax(5vh , 10vw)) / 
+                           repeat(3, minmax(5vh , 10vw)); */
+        }
+
+            .space {
+                border: 2px solid black;
+                display: grid;
+                place-items: center;
+                font-size: 64px;
+                font-weight: 400;
+            }
+
+            .space:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            .space:active {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+        .reset,
+        .start {
+            font-size: 28px;
+            padding: 8px 24px;
+            border-radius: 16px;
+        }
