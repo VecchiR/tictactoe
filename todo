@@ -1,3 +1,0 @@
-maybe:
-  -error "label" p/ se a pessoaclicar start sem colocar os nomes dos players
-  -+verificação se os nomes não são iguais (altera textContent do erro)

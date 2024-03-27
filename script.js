@@ -70,17 +70,22 @@ const gameflow = (function () {
         gameOverMsg = false;
 
         function goCheck(arr, x) {
+            let tempCheckFull = ['', '', ''];
             for (let i = 0; i < 3; i++) {
                 if (arr[i].every((val) => val === arr[i][0]) && arr[i][0] != '') {
                     return true;
                 }
                 else if (arr[i].every((val) => val != '')) {
-                    checkFull[x] = 'full';
+                    tempCheckFull[i] = 'full';
                 }
                 else {
-                    checkFull[x] = '';
+                    tempCheckFull[i] = '';
                 }
             }
+            if (tempCheckFull.every((val) => val === 'full')) {
+                checkFull[x] = 'full';
+            }
+            else { checkFull[x] = ''; }
         }
 
         for (let x = 0; x < 3; x++) {
