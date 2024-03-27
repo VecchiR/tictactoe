@@ -6,12 +6,11 @@ const gameboard = (function () {
     const writeOnBoard = (x, y) => {
         if (board[x][y] === '') {
             board[x][y] = gameflow.getActivePlayer().getMarker();
-            console.log(getBoard());
             return true;
         }
 
         else {
-            console.log('Space already taken! Choose another one');
+            displayController.updMsgDisplay('Space already taken! Choose another one');
             return false;
         }
     }
@@ -48,10 +47,11 @@ const gameflow = (function () {
             displayController.updDisplayBoard();
             checkGameOver();
             if (gameOverMsg) {
-                console.log(gameOverMsg);
+                displayController.updMsgDisplay(gameOverMsg);
             }
             else {
                 changeActivePlayer();
+                displayController.updMsgDisplay('turn');
             }
         }
     }
@@ -136,7 +136,6 @@ const displayController = (function () {
         resetButton.addEventListener('click', resetScreen);
         const board = document.createElement('div');
         board.setAttribute('class', 'board');
-        console.log(board);
         for (let x = 0; x < 3; x++) {
             for (let y = 0; y < 3; y++) {
                 let space = document.createElement('div');
@@ -154,6 +153,14 @@ const displayController = (function () {
         gameContainer.appendChild(resetButton);
         mainContainer.appendChild(gameContainer);
         displayBoard = document.querySelectorAll('.space');
+        updMsgDisplay('turn');
+    }
+
+    const updMsgDisplay = (arg) => {
+        if (arg === 'turn') {
+            msgDisplay.innerHTML = `${gameflow.getActivePlayer().name}, it's your turn!`;
+        }
+        else { msgDisplay.innerHTML = arg; }
     }
 
     const updDisplayBoard = () => {
@@ -164,12 +171,12 @@ const displayController = (function () {
 
     const startButton = document.querySelector('.start');
     startButton.addEventListener('click', () => {
-        if(removeStartScreen()){
+        if (removeStartScreen()) {
             createBoard();
         }
     });
 
-    return { updDisplayBoard, createBoard };
+    return { updDisplayBoard, createBoard, updMsgDisplay };
 })();
 
 

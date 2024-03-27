@@ -1,3 +1,3 @@
-reset button - implementar de fato a função 
+depois que reseta, tem que limpar os valores do board
 
-msgDisplay - logo que trocar pra tela do jogo, já aparecer "FULANO, IT'S YOUR TURN!"
+o 'tabuleiro visual' fica limpo, mas quando tenta clicar, acusa "space is already taken"
