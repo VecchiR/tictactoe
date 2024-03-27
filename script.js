@@ -25,11 +25,12 @@ const gameboard = (function () {
 const gameflow = (function () {
     let player1;
     let player2;
-    let playerTurn = 1;
+    let playerTurn;
     let gameOverMsg;
-    const setPlayersNames = (xname, oname) => {
+    const setPlayers = (xname, oname) => {
         player1 = createPlayer(xname, 'x');
         player2 = createPlayer(oname, 'o');
+        playerTurn = Math.floor(Math.random() * 2)+1;
     }
     const getActivePlayer = () => {
         if (playerTurn === 1) {
@@ -100,7 +101,7 @@ const gameflow = (function () {
         }
     }
 
-    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver, setPlayersNames };
+    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver, setPlayers };
 })();
 
 const displayController = (function () {
@@ -118,7 +119,7 @@ const displayController = (function () {
 
     const removeStartScreen = () => {
         if (playerXName.value && playerOName.value) {
-            gameflow.setPlayersNames(playerXName.value, playerOName.value);
+            gameflow.setPlayers(playerXName.value, playerOName.value);
             mainContainer.removeChild(startContainer);
             return true;
         }
