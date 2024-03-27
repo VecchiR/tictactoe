@@ -102,27 +102,38 @@ const displayController = (function () {
     let displayBoard;
     let msgDisplay;
     let resetButton;
+    let gameContainer;
 
     const playerXName = document.querySelector('#playerx');
     const playerOName = document.querySelector('#playero');
 
+    const startContainer = document.querySelector('.start-container');
+    const mainContainer = document.querySelector('.main-container');
 
     const removeStartScreen = () => {
         if (playerXName.value && playerOName.value) {
             gameflow.setPlayersNames(playerXName.value, playerOName.value);
-            document.querySelector('.main-container').removeChild(document.querySelector('.start-container'));
+            mainContainer.removeChild(startContainer);
             return true;
         }
         return false;
     }
 
+    const resetScreen = () => {
+        mainContainer.removeChild(gameContainer);
+        mainContainer.appendChild(startContainer);
+        document
+    }
+
     const createBoard = () => {
+        gameContainer = document.createElement('div');
+        gameContainer.setAttribute('class', 'game-container');
         msgDisplay = document.createElement('span');
         msgDisplay.setAttribute('class', 'messages');
         resetButton = document.createElement('button');
         resetButton.setAttribute('class', 'reset');
         resetButton.innerHTML = 'Reset';
- //-----------       //resetButton.addEventListener('click', );   -------------         FALTA A FUNÇÃO "O QUE ACONTECE AO CLICAR EM RESET"
+        resetButton.addEventListener('click', resetScreen);
         const board = document.createElement('div');
         board.setAttribute('class', 'board');
         console.log(board);
@@ -138,9 +149,10 @@ const displayController = (function () {
                 board.appendChild(space);
             }
         }
-        document.querySelector('.main-container').appendChild(msgDisplay);
-        document.querySelector('.main-container').appendChild(board);
-        document.querySelector('.main-container').appendChild(resetButton);
+        gameContainer.appendChild(msgDisplay);
+        gameContainer.appendChild(board);
+        gameContainer.appendChild(resetButton);
+        mainContainer.appendChild(gameContainer);
         displayBoard = document.querySelectorAll('.space');
     }
 
@@ -157,7 +169,7 @@ const displayController = (function () {
         }
     });
 
-    return { updDisplayBoard, createBoard, removeStartScreen };
+    return { updDisplayBoard, createBoard };
 })();
 
 
