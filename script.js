@@ -27,6 +27,10 @@ const gameflow = (function () {
     let player2;
     let playerTurn;
     let gameOverMsg;
+    let gameOVerFlag;
+    const turnOffGameOverFlag = () => {
+        gameOVerFlag = false;
+    }
     const setPlayers = (xname, oname) => {
         player1 = createPlayer(xname, 'X');
         player2 = createPlayer(oname, 'O');
@@ -49,15 +53,17 @@ const gameflow = (function () {
         }
     }
     const selectSpace = (x, y) => {
-        if (gameboard.writeOnBoard(x, y)) {
-            displayController.updDisplayBoard();
-            checkGameOver();
-            if (gameOverMsg) {
-                displayController.updMsgDisplay(gameOverMsg);
-            }
-            else {
-                changeActivePlayer();
-                displayController.updMsgDisplay('turn');
+        if (!gameOVerFlag) {
+            if (gameboard.writeOnBoard(x, y)) {
+                displayController.updDisplayBoard();
+                checkGameOver();
+                if (gameOverMsg) {
+                    displayController.updMsgDisplay(gameOverMsg);
+                }
+                else {
+                    changeActivePlayer();
+                    displayController.updMsgDisplay('turn');
+                }
             }
         }
     }
@@ -98,15 +104,17 @@ const gameflow = (function () {
             }
             checkArr = [row, col, diag];
             if (goCheck(checkArr, x)) {
+                gameOVerFlag = true;
                 return gameOverMsg = `Game Over! ${getActivePlayer().name} wins!`;
             }
             else if (checkFull.every((val) => val === 'full')) {
+                gameOVerFlag = true;
                 return gameOverMsg = "Game Over! It's a tie!";
             }
         }
     }
 
-    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver, setPlayers };
+    return { selectSpace, getActivePlayer, changeActivePlayer, checkGameOver, setPlayers, turnOffGameOverFlag };
 })();
 
 const displayController = (function () {
@@ -132,6 +140,7 @@ const displayController = (function () {
 
     const resetScreen = () => {
         gameboard.resetBoard();
+        gameflow.turnOffGameOverFlag();
         mainContainer.removeChild(gameContainer);
         mainContainer.appendChild(startContainer);
     }
